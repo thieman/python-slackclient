@@ -43,10 +43,13 @@ class SlackClient(object):
             if data["type"] == 'channel_created':
                 channel = data["channel"]
                 self.server.attach_channel(channel["name"], channel["id"], [])
-            if data["type"] == 'im_created':
+            elif data["type"] == 'im_created':
                 channel = data["channel"]
                 self.server.attach_channel(channel["user"], channel["id"], [])
-            if data["type"] == "team_join":
+            elif data["type"] == 'group_joined':
+                channel = data["channel"]
+                self.server.attach_channel(channel["name"], channel["id"], [])
+            elif data["type"] == "team_join":
                 user = data["user"]
                 self.server.parse_user_data([user])
             pass
